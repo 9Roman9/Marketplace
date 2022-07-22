@@ -157,4 +157,33 @@ public class Menu {
             user.addProducts(product);
         }
     }
+
+    private void checkShowUsersByProductId(Scanner scanner){
+        System.out.println("\nPlease, enter id of product:");
+        int idProductInteger;
+        while (true){
+            try {
+                String idProduct = scanner.next();
+                idProductInteger = Integer.parseInt(idProduct);
+            } catch (NumberFormatException e) {
+                System.err.println("The id is not integer. Please, try again.");
+                continue;
+            }
+            break;
+        }
+        showUsersByProductId(idProductInteger);
+    }
+
+    private void showUsersByProductId(int id){
+        System.out.println();
+        for (var p: products){
+            if (p.getId()==id){
+                for (var u : users){
+                    if (u.getProducts().contains(p)) System.out.println(u);
+                }
+                return;
+            }
+        }
+        System.err.println("There is no product with such id. Please try again.");
+    }
 }
