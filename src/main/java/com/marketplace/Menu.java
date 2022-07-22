@@ -272,4 +272,14 @@ public class Menu {
         }
         System.err.println("There is no product with such id. Please try again.");
     }
+
+    private void displayListOfAllUsers(){
+        System.out.println();
+        for (var u : users) System.out.println(u.toString());
+    }
+
+    private void displayListOfAllProducts(){
+        System.out.println();
+        for (var p : products) System.out.println(p.toString());
+    }
 }
