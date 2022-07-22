@@ -17,6 +17,52 @@ public class Menu {
         context = new AnnotationConfigApplicationContext(Config.class);
     }
 
+    public void execute(){
+        label:
+        while (true){
+            System.out.println("\nPlease, enter one of the next commands:\naddUser\n" +
+                    "addProduct\ndeleteUser\ndeleteProduct\nbuyProduct\n" +
+                    "displayListOfAllUsers\ndisplayListOfAllProducts\n" +
+                    "showUsersByProductId\nshowProductsByUserId\nexit");
+            Scanner scanner = new Scanner(System.in);
+            String keyword = scanner.next();
+            switch (keyword) {
+                case "exit":
+                    break label;
+                case "addUser":
+                    checkAddUser(scanner);
+                    break;
+                case "addProduct":
+                    checkAddProduct(scanner);
+                    break;
+                case "displayListOfAllUsers":
+                    displayListOfAllUsers();
+                    break;
+                case "displayListOfAllProducts":
+                    displayListOfAllProducts();
+                    break;
+                case "buyProduct":
+                    checkBuyProduct(scanner);
+                    break;
+                case "deleteUser":
+                    checkDeleteUser(scanner);
+                    break;
+                case "deleteProduct":
+                    checkDeleteProduct(scanner);
+                    break;
+                case "showProductsByUserId":
+                    checkShowProductsByUserId(scanner);
+                    break;
+                case "showUsersByProductId":
+                    checkShowUsersByProductId(scanner);
+                    break;
+                default:
+                    System.err.println("You entered wrong command. Please, try again");
+                    break;
+            }
+        }
+    }
+    
     private void checkAddUser(Scanner scanner){
         System.out.println("\nPlease, enter first name of user:");
         String firstName;
