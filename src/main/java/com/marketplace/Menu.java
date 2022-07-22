@@ -89,4 +89,72 @@ public class Menu {
         products.add(product);
         productsArchive.add(product);
     }
+
+    private void checkBuyProduct(Scanner scanner){
+        System.out.println("\nPlease, enter id of user:");
+        int idUserInteger;
+        while (true){
+            try {
+                String idUser = scanner.next();
+                idUserInteger = Integer.parseInt(idUser);
+            } catch (NumberFormatException e) {
+                System.err.println("The id is not integer. Please, try again.");
+                continue;
+            }
+            break;
+        }
+        System.out.println("Please, enter id of product:");
+        int idProductInteger;
+        while (true){
+            try {
+                String idProduct = scanner.next();
+                idProductInteger = Integer.parseInt(idProduct);
+            } catch (NumberFormatException e) {
+                System.err.println("The id is not integer. Please, try again.");
+                continue;
+            }
+            break;
+        }
+        buyProduct(idUserInteger,idProductInteger);
+    }
+
+    private void buyProduct(int idUser, int idProduct){
+        if (users.isEmpty()){
+            System.err.println("There are no users in marketplace. Please, add new users");
+        } else if (products.isEmpty()) {
+            System.err.println("There are no products in marketplace. Please, add new products");
+        }
+
+        User user = context.getBean("userBean",User.class);
+        Product product = context.getBean("productBean",Product.class);
+        boolean foundUser = false;
+        boolean foundProduct = false;
+
+        for (var u : users) if (u.getId()==idUser) {
+            user = u;
+            foundUser = true;
+            break;
+        }
+        if (!foundUser) {
+            System.err.println("There is no user with such id. Please, try again.");
+            return;
+        }
+        for (var p : products) if (p.getId()==idProduct) {
+            product = p;
+            foundProduct = true;
+            break;
+        }
+        if (!foundProduct) {
+            System.err.println("There is no product with such id. Please, try again.");
+            return;
+        }
+        if (product.getPrice()>user.getAmountOfMoney()) {
+            System.err.println("The price of product is higher than amount of money of user." +
+                    " Please, try again");
+        } else {
+            System.out.println("The purchase was successful!");
+            user.setAmountOfMoney(user.getAmountOfMoney()- product.getPrice());
+            user.addProducts(product);
+        }
+    }
 }
