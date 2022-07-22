@@ -214,4 +214,30 @@ public class Menu {
         }
         System.err.println("There is no user with such id. Please try again.");
     }
+
+    private void checkDeleteUser(Scanner scanner){
+        System.out.println("\nPlease, enter id of user:");
+        int idUserInteger;
+        while (true){
+            try {
+                String idUser = scanner.next();
+                idUserInteger = Integer.parseInt(idUser);
+            } catch (NumberFormatException e) {
+                System.err.println("The id is not integer. Please, try again.");
+                continue;
+            }
+            break;
+        }
+        deleteUser(idUserInteger);
+    }
+
+    private void deleteUser(int id){
+        for (var u : users){
+            if(u.getId()==id) {
+                users.remove(u);
+                return;
+            }
+        }
+        System.err.println("There is no user with such id. Please try again.");
+    }
 }
