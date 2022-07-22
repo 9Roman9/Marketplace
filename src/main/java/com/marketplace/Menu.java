@@ -57,4 +57,36 @@ public class Menu {
         users.add(user);
         usersArchive.add(user);
     }
+
+    private void checkAddProduct(Scanner scanner){
+        System.out.println("\nPlease, enter name of product:");
+        String name;
+        while (true){
+            name = scanner.next();
+            if (name.equals("")) System.err.println("The name is empty. Please, try again.");
+            else break;
+        }
+        System.out.println("Please, enter price of product:");
+        int priceInteger;
+        while (true){
+            try {
+                String price = scanner.next();
+                priceInteger = Integer.parseInt(price);
+            } catch (NumberFormatException e) {
+                System.err.println("The price is not integer. Please, try again.");
+                continue;
+            }
+            break;
+        }
+        addProduct(name,priceInteger);
+    }
+
+    private void addProduct(String name, int price){
+        Product product = context.getBean("productBean",Product.class);
+        product.setId(productsArchive.size()+1);
+        product.setName(name);
+        product.setPrice(price);
+        products.add(product);
+        productsArchive.add(product);
+    }
 }
