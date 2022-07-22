@@ -240,4 +240,36 @@ public class Menu {
         }
         System.err.println("There is no user with such id. Please try again.");
     }
+
+    private void checkDeleteProduct(Scanner scanner){
+        System.out.println("\nPlease, enter id of product:");
+        int idProductInteger;
+        while (true){
+            try {
+                String idProduct = scanner.next();
+                idProductInteger = Integer.parseInt(idProduct);
+            } catch (NumberFormatException e) {
+                System.err.println("The id is not integer. Please, try again.");
+                continue;
+            }
+            break;
+        }
+        deleteProduct(idProductInteger);
+    }
+
+    private void deleteProduct(int id) {
+        for (var p : products) {
+            if (p.getId()==id){
+                for (var u : users) {
+                    for (var pp : u.getProducts()){
+                        if (pp.equals(p)) u.getProducts().remove(pp);
+                        break;
+                    }
+                }
+                products.remove(p);
+                return;
+            }
+        }
+        System.err.println("There is no product with such id. Please try again.");
+    }
 }
